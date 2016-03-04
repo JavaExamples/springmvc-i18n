@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 查找最新的schemaLocation 访问 http://www.springframework.org/schema/ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop   
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd   
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd   
+        http://www.springframework.org/schema/mvc   
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd   
+        http://www.springframework.org/schema/tx   
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- 启用MVC注解 -->
+	<mvc:annotation-driven />
+	
+	<!-- 默认首页 -->
+	<mvc:view-controller path="/" view-name="/welcome" />
+
+	<!-- 指定Sping组件扫描的基本包路径 -->
+	<context:component-scan base-package="org.example.controller">
+		<!-- 这里只扫描Controller -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- JSP视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />
+	</bean>
+
+	<!-- 配置国际化资源文件路径 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<!-- 定义消息资源文件的相对路径 -->
+			<value>messages/message</value>
+		</property>
+	</bean>
+	<!-- 基于Cookie的本地化解析器 -->
+	 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+	 	<property name="cookieMaxAge" value="604800"/>
+	 	<property name="defaultLocale" value="zh_CN"/>
+	 	<property name="cookieName" value="Language"></property>
+	 </bean>
+
+</beans>  
